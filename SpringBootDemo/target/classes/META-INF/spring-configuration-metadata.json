@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "db",
+      "type": "org.gelm.portal.configprop.SpringBootDemoPropertyConfig",
+      "sourceType": "org.gelm.portal.configprop.SpringBootDemoPropertyConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "db.driver-name",
+      "type": "java.lang.String",
+      "sourceType": "org.gelm.portal.configprop.SpringBootDemoPropertyConfig"
+    },
+    {
+      "name": "db.password",
+      "type": "java.lang.String",
+      "sourceType": "org.gelm.portal.configprop.SpringBootDemoPropertyConfig"
+    },
+    {
+      "name": "db.url",
+      "type": "java.lang.String",
+      "sourceType": "org.gelm.portal.configprop.SpringBootDemoPropertyConfig"
+    },
+    {
+      "name": "db.username",
+      "type": "java.lang.String",
+      "sourceType": "org.gelm.portal.configprop.SpringBootDemoPropertyConfig"
+    }
+  ],
+  "hints": []
+}
