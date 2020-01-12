@@ -1,5 +1,7 @@
 package org.gelm.portal.jdbc.configuration;
 
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import oracle.jdbc.pool.OracleDataSource;
 
 @Configuration
 public class JdbcConfiguration {
@@ -21,13 +25,30 @@ public class JdbcConfiguration {
 	private String password;
 	
 	//testing purpose
-	@Bean
+	@Bean(name="springdatasource")
 	public DataSource configureDataSource() {
 		DriverManagerDataSource ds=new DriverManagerDataSource();
 		ds.setDriverClassName(driverClassName);
 		ds.setUrl(url);
 		ds.setUsername(username);
 		ds.setPassword(password);
+		return ds;
+	}
+	@Bean(name = "oracledatasource")
+	public DataSource configureOracleDataSource() {
+		OracleDataSource ds=null;
+		try {
+			ds = new OracleDataSource();
+		
+		ds.setDriverType(driverClassName);
+		ds.setURL(url);
+		ds.setUser(username);
+		ds.setPassword(password);
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return ds;
 	}
 	
