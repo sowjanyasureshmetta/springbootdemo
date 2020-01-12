@@ -27,7 +27,21 @@ public class BatchClient implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		try {
-		jobLauncher.run(job, new JobParameters());
+		//With your below step you will only be able to launch the job only once.	
+		   jobLauncher.run(job, new JobParameters());
+		
+			/*
+			 * The job is unique identified by its id together with the parameters.
+			 * Currently there is no way to make a distinction based on the parameters.
+			 * Instead of adding new JobParameters() use the JobParamtersBuilderBuilder and
+			 * add the current date and time.
+			 */
+			
+			/*
+			 * JobParametersBuilder builder = new JobParametersBuilder();
+			 * builder.addDate("date", new Date()); jobLauncher.run(job,
+			 * builder.toJobParameters());
+			 */
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
