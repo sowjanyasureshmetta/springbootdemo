@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: 
+    schema:
+    - classpath*:schema.sql
+    data:
+    - classpath*:data.sql
+  h2:
+    console:
+      enabled: true
+      path: /h2db        
+  security:
+    user:
+      name: suresh 
+      password: suresh      
+  jpa:
+    hibernate:
+      ddl-auto: none
+  boot:
+    admin:
+      client:
+        url:
+        - http://localhost:8082/admin
+
+server:
+  port: 8082
+  servlet:
+    context-path: /demo
