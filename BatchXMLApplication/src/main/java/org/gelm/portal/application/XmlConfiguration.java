@@ -1,8 +1,9 @@
 package org.gelm.portal.application;
 
+import java.io.File;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -15,9 +16,10 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.xml.StaxEventItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 
 @Configuration
@@ -30,12 +32,16 @@ public class XmlConfiguration
     @Autowired
     StepBuilderFactory stepBuilderFactory;
 
+    @Value("${XmlFileLocalSourceLocation}")
+    private String xmlFileLocalSourceLocation;
+    
     @StepScope
     @Bean(name="xmlReader")
     public StaxEventItemReader<Students> reader() 
     {
         StaxEventItemReader<Students> xmlFileReader = new StaxEventItemReader<>();
-        xmlFileReader.setResource(new ClassPathResource("students.xml"));
+        //xmlFileReader.setResource(new ClassPathResource("students.xml"));
+        xmlFileReader.setResource(new FileSystemResource(new File(xmlFileLocalSourceLocation)));
         xmlFileReader.setFragmentRootElementName("students");
 
 		/*
@@ -56,35 +62,16 @@ public class XmlConfiguration
 
         return xmlFileReader;
     }
-
-
     @Bean(name="xmlProcessor")
     public ItemProcessor<Students, Students> processor() 
     {
         return new Processor();
     }
-
-
     @Bean(name="xmlWriter")
     public ItemWriter<Students> writer() 
     {
         return new WriterofStudent();     
     }
-    
-
-	/*
-	 * @Bean(name="xmljobListener") public JobExecutionListenerSupport jobListener()
-	 * { return new JobListener(); }
-	 */
-	/*
-	 * @JobScope
-	 * 
-	 * @Bean(name="xmltaskExecutor") public ThreadPoolTaskExecutor taskExecutor() {
-	 * ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-	 * executor.setCorePoolSize(50); executor.setMaxPoolSize(100); return executor;
-	 * }
-	 */
-
     @Bean(name="xmlStep")
     public Step xmlFileToDatabaseStep() 
     {
@@ -93,6 +80,7 @@ public class XmlConfiguration
                 .reader(this.reader())
                // .processor(this.processor())
                 .writer(this.writer())
+                .listener(new XmlStepExecutionListener())
                 //.taskExecutor(this.taskExecutor())
                 .build();
     }
@@ -103,7 +91,7 @@ public class XmlConfiguration
         return jobBuilderFactory
                 .get("xmlJob"+new Date())
                 .incrementer(new RunIdIncrementer())
-               // .listener(this.jobListener())
+                .listener(new XmlJobExecutionListener())
                 .flow(step)
                 .end()
                 .build();
