@@ -6,42 +6,42 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CUSTOMER")
-public class Customer 
+@Table(name = "HOTEL_CUSTOMER")
+public class Customer
 {
 	@Id
-	@Column(name = "CUSTOMER_ID",length = 10)
-	private int customer_id;
-	@Column(name = "CUSTOMER_NAME",length = 30)
+	@Column(name = "CUSTOMER_ID")
+	private int customerId;
+	@Column(name = "NAME")
 	private String name;
-	@Column(name = "EMAIL_ID",length = 30)
-	private String eEmail;
-	@Column(name = "MOBILE_NUMBER",length = 10)
+	@Column(name = "EMAIL")
+	private String email;
+	@Column(name = "MOBILE")
 	private String mobileNumber;
-
-	/*
-	 * @OneToOne(mappedBy = "customer",orphanRemoval = true,cascade =
-	 * CascadeType.ALL) private Hotel hotel;
-	 */
+	@Column(name = "CHECK_IN_DATE")
+	private String checkInDate;
+	@Column(name = "CHECK_OUT_DATE")
+	private String checkOutDate;
+	@Column(name = "HOTEL_CUSTOMER_ID")
+	private String hotelCustomerId;
 	
-	
+	public int getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
 	public String getName() {
 		return name;
-	}
-	public int getCustomer_id() {
-		return customer_id;
-	}
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String geteEmail() {
-		return eEmail;
+	public String getEmail() {
+		return email;
 	}
-	public void seteEmail(String eEmail) {
-		this.eEmail = eEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getMobileNumber() {
 		return mobileNumber;
@@ -49,10 +49,24 @@ public class Customer
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-	/*
-	 * public Hotel getHotel() { return hotel; } public void setHotel(Hotel hotel) {
-	 * this.hotel = hotel; }
-	 */
+	public String getCheckInDate() {
+		return checkInDate;
+	}
+	public void setCheckInDate(String checkInDate) {
+		this.checkInDate = checkInDate;
+	}
+	public String getCheckOutDate() {
+		return checkOutDate;
+	}
+	public void setCheckOutDate(String checkOutDate) {
+		this.checkOutDate = checkOutDate;
+	}
+	public String getHotelCustomerId() {
+		return hotelCustomerId;
+	}
+	public void setHotelCustomerId(String hotelCustomerId) {
+		this.hotelCustomerId = hotelCustomerId;
+	}
 	
 	
 	
