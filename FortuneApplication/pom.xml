@@ -27,4 +27,8 @@
   
   </dependencies>
   
+  <build>
+  <finalName>FortuneApplication</finalName>
+  </build>
+  
 </project>
